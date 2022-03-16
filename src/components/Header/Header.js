@@ -1,15 +1,17 @@
 import React from 'react'
-import Feature from '../Feature/Feature'
 import { Background, Container, Logo, ButtonLink } from './styles'
+import { Link } from 'react-router-dom'
 
-const Header = () => {
+const Header = ({ children }) => {
   return (
     <Background bg={true}>
         <Container>
+          <Link to='/'>
             <Logo src='../images/misc/logo.svg' alt='Netflix'/>
-            <ButtonLink>Sign In</ButtonLink>
+          </Link>
+          <ButtonLink to='/signin'>Sign In</ButtonLink>
         </Container>
-        <Feature />
+        {children}
     </Background>
   )
 }

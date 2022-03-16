@@ -1,4 +1,5 @@
 import styled from 'styled-components'
+import { Link } from 'react-router-dom';
 
 export const Background = styled.section`
     display: flex;
@@ -38,7 +39,7 @@ export const Logo = styled.img`
     }
 `;
 
-export const ButtonLink = styled.a`
+export const ButtonLink = styled(Link)`
     display: block;
     background-color: #e50914;
     width: 84px;
