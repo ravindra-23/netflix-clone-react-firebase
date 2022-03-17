@@ -1,16 +1,29 @@
 import React, { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import { Container, Title, Error, Base, Input, Submit, Text, Link, TextSmall } from './styles'
+import app from '../../Firebase/firebase'
+import { getAuth, signInWithEmailAndPassword } from 'firebase/auth'
 
 const SigninForm = () => {
+    const auth = getAuth(app)
     const [error, setError] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
     const [password, setPassword] = useState('');
+    const navigate = useNavigate();
 
     const isInvalid = password === '' || emailAddress === ''
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        console.log(emailAddress, password)
+        
+        try {
+            setError('')
+            await signInWithEmailAndPassword(auth, emailAddress, password)
+            navigate('/browse')
+            
+        } catch (error) {
+            setError('Failed to Login')
+        }
     }
   return (
     <Container>

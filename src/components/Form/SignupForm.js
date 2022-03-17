@@ -1,25 +1,54 @@
-import React, { useState } from 'react'
+import React, {  useState } from 'react'
 import { Container, Title, Error, Base, Input, Submit, Text, Link, TextSmall } from './styles'
+import { createUserWithEmailAndPassword, getAuth, updateProfile } from 'firebase/auth';
+import app from '../../Firebase/firebase'
+import { useNavigate } from 'react-router-dom';
 
 
 const SignupForm = () => {
+    const auth = getAuth(app)
     const [error, setError] = useState('');
     const [name, setName] = useState('');
     const [emailAddress, setEmailAddress] = useState('');
-    const [password, setPassword] = useState();
-    const [user, setUser] = useState({name, emailAddress, password});
+    const [password, setPassword] = useState('');
+    const [confirmPassword, setConfirmPassword] = useState('');
+    const navigate = useNavigate();
 
-    const isInvalid = password === '' || emailAddress === '' || name === '';
+    const isInvalid = password === '' || emailAddress === '' || name === '' || confirmPassword === '';
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        setUser(user)
-        console.log(user)
+
+        if(password !== confirmPassword) {
+            setError('Password Do Not Match.')
+        } else {
+
+            try {
+                setError('');
+                await createUserWithEmailAndPassword(auth, emailAddress, password)
+                .then(data => updateProfile(auth.currentUser, {
+                    displayName: name,
+                }))
+                .then(() => {
+                    setName('')
+                    setEmailAddress('')
+                    setPassword('')
+                    navigate('/browse')
+                })
+                
+                
+            } catch (error) {
+                setError('Failed to create account')
+            }
+
+        } 
     }
+    console.log(auth.currentUser);
+
 
   return (
     <Container>
-        <Title>Sign In</Title>
+        <Title>Sign Up</Title>
         {error && <Error>{error}</Error>}
         <Base onSubmit={handleSubmit} method='POST'>
             <Input 
@@ -40,6 +69,13 @@ const SignupForm = () => {
                 placeholder='Password'
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
+            />
+
+            <Input 
+                type='password'
+                placeholder='Confirm Password'
+                value={confirmPassword}
+                onChange={(e) => setConfirmPassword(e.target.value)}
             />
 
             <Submit type='submit' disabled={isInvalid}>
