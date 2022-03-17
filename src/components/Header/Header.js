@@ -1,16 +1,10 @@
 import React from 'react'
-import { Background, Container, Logo, ButtonLink } from './styles'
-import { Link } from 'react-router-dom'
+import { Background } from './styles'
 
-const Header = ({ children }) => {
+const Header = ({ children, bg, src }) => {
+  console.log(src)
   return (
-    <Background bg={true}>
-        <Container>
-          <Link to='/'>
-            <Logo src='../images/misc/logo.svg' alt='Netflix'/>
-          </Link>
-          <ButtonLink to='/signin'>Sign In</ButtonLink>
-        </Container>
+    <Background bg={bg} src={src}>
         {children}
     </Background>
   )
