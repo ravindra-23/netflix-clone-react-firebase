@@ -1,68 +1,70 @@
-import React, { useEffect, useState } from 'react'
-import { Header, SearchBar, Card } from '../index'
-import app from '../../Firebase/firebase'
-import { getAuth } from 'firebase/auth'
-import { Container, Dropdown, Feature, FeatureCallOut, Group, Link, Logo, Picture, PlayButton, Profile, Text } from '../Header/styles'
-import axios from '../../Axios/axios'
+import React, { useState } from 'react'
+import { Card, Footer } from '../index'
+import BrowserHeader from './BrowserHeader/BrowserHeader'
 import requests from '../../Axios/requests'
 
 const BrowseContent = () => {
-  const auth = getAuth(app);
-  const user = auth.currentUser
-  const [bannerMovie, setBannerMovie] = useState([])
+  
+  
+  const [showMovies, setShowMovies] = useState(false)
+  const [showTv, setShowTv] = useState(false)
+  const [showHome, setShowHome] = useState(true)
+
+  const handleHome = () => {
+    setShowHome(true)
+    setShowMovies(false)
+    setShowTv(false)
+  }
+
+  const handleMovies = () => {
+    setShowHome(false)
+    setShowMovies(true);
+    setShowTv(false)
+  }
+
+  const handleTv = () => {
+    setShowHome(false)
+    setShowMovies(false);
+    setShowTv(true);
+  }
   
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const {data}  = await axios.get(requests.fetchNetflixOriginals)
-      setBannerMovie(data.results[Math.floor(Math.random() * data.results.length - 1)])
-      return data
-    }
-    fetchData()
-  }, [])
+  
  
   return (
     <>
-      <Header src={bannerMovie.backdrop_path} dontShowOnSmallViewPort bg={false}>
-        <Container>
-          <Group>
-            <Logo to='/home' src='../images/misc/logo.svg' alt='Netflix' />
-            <Link>Films</Link>
-            <Link>Tv Shows</Link>
-          </Group>
+      <BrowserHeader handleMovies={handleMovies} handleTv={handleTv} handleHome={handleHome} />
 
-          <Group>
-            <SearchBar />
-            <Profile>
-              <Picture src='../images/users/1.png' />
-              <Dropdown>
-                <Group>
-                  <Picture src='../images/users/1.png' />
-                  {/* <Link>{user.displayName}</Link> */}
-                </Group>
-                <Group>
-                  <Link>Sign out</Link>
-                </Group>
-              </Dropdown>
-            </Profile>
-          </Group>
-        </Container>
+      {showHome && 
+      <>
+        <Card title='Netflix Originals' id='NOT' fetchUrl={requests.fetchNetflixOriginalsTV} />
+        <Card title='Top Rated' id='TR' fetchUrl={requests.fetchTopRated} />
+        <Card title='Action' id='AM' fetchUrl={requests.fetchActionMovies} />
+        <Card title='Trending TV' id='TT' fetchUrl={requests.fetchTrendingTV} />
+      </>
+      }
 
-        <Feature>
-          <FeatureCallOut>Watch {bannerMovie.name}</FeatureCallOut>
-          <Text>{bannerMovie.overview}</Text>
-          <PlayButton>Play</PlayButton>
-        </Feature>
-      </Header>
+      {showMovies && 
+      <>
+        <Card title='Top Rated' id='TR' fetchUrl={requests.fetchTopRated} />
+        <Card title='Action' id='AM' fetchUrl={requests.fetchActionMovies} />
+        <Card title='Trending' id='TN' fetchUrl={requests.fetchTrending} />
+        <Card title='Romantic' id='RM' fetchUrl={requests.fetchRomanceMovies} />
+        <Card title='Comedy' id='CM' fetchUrl={requests.fetchComedyMovies} />
+        <Card title='Horror' id='HM' fetchUrl={requests.fetchHorrorMovies} />
+        <Card title='Documentries' id='DM' fetchUrl={requests.fetchDocumentaries} />
+      </>
+      }
 
-      <Card title='Top Rated' id='TR' fetchUrl={requests.fetchTopRated} />
-      <Card title='Action' id='AM' fetchUrl={requests.fetchActionMovies} />
-      <Card title='Trending' id='TN' fetchUrl={requests.fetchTrending} />
-      <Card title='Romantic' id='RM' fetchUrl={requests.fetchRomanceMovies} />
-      <Card title='Comedy' id='CM' fetchUrl={requests.fetchComedyMovies} />
-      <Card title='Horror' id='HM' fetchUrl={requests.fetchHorrorMovies} />
-      <Card title='Documentries' id='DM' fetchUrl={requests.fetchDocumentaries} />
-    
+      {showTv && 
+      <>
+        <Card title='Netflix Originals' id='NOT' fetchUrl={requests.fetchNetflixOriginalsTV} />
+        <Card title='Top Rated' id='TRT' fetchUrl={requests.fetchTopRatedTV} />
+        <Card title='Trending TV' id='TT' fetchUrl={requests.fetchTrendingTV} />
+        <Card title='Popular' id='PT' fetchUrl={requests.fetchPopularTV} />
+        <Card title='Airing Today' id='AT' fetchUrl={requests.fetchAiringTodayTV} />
+      </>
+      }
     </>
   )
 }
