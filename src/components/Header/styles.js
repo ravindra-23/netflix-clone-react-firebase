@@ -5,10 +5,6 @@ export const Background = styled.section`
     display: flex;
     flex-direction: column;
     background: url(${({ src }) => (src ? `https://image.tmdb.org/t/p/original${src}` : '../images/misc/home-bg.jpg')}) top left / cover no-repeat;
-    
-    @media (max-width: 1100px) {
-        ${({ dontShowOnSmallViewPort }) => dontShowOnSmallViewPort && `background: none;`}
-    }
 `;
 
 export const Container = styled.div`
@@ -72,6 +68,7 @@ export const Link = styled.p`
     
     &:hover {
         font-weight: bold;
+        transition: scale(1.5);
     }
     &:last-of-type {
         margin-right: 0;
@@ -153,7 +150,7 @@ export const Feature = styled(Container)`
     align-items: normal;
     width: 50%;
     
-    @media (max-width: 1100px) {
+    @media (max-width: 768px) {
         display: none;
     }
 `;
