@@ -68,6 +68,7 @@ export const Entities = styled.div`
     flex-direction: row;
     position: relative;
     overflow-x: scroll;
+    overflow-y: hidden;
     scroll-behavior: smooth;
 
     &::-webkit-scrollbar {
@@ -86,7 +87,7 @@ export const Meta = styled.div`
 export const Image = styled.img`
     border: 0;
     width: 100%;
-    min-width: 19rem;
+    min-width: 20rem;
     cursor: pointer;
     height: auto;
     padding: 0;
@@ -107,7 +108,7 @@ export const Item = styled.div`
     transition: all 0.2s ease-in-out;
     
     &:hover {
-        transform: scale(1.1);
+        transform: scale(1.3);
         z-index: 99;
     }
     
