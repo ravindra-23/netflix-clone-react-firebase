@@ -1,24 +1,23 @@
 import styled from 'styled-components';
 
 export const Title = styled.p`
-    font-size: 24px;
+    font-size: 1.5rem;
     color: #e5e5e5;
     font-weight: bold;
-    margin-left: 56px;
-    margin-right: 56px;
+    margin-inline: 3.5rem;
     margin-top: 0;
 `;
 
 export const Container = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: 50px;
+    margin-bottom: 3.2rem;
     box-sizing: border-box;
     overflow: hidden;
-    
+
     > ${Title} {
         @media (max-width: 1000px) {
-            margin-left: 30px;
+            margin-left: 1.8rem;
         }
     }
     
@@ -28,22 +27,28 @@ export const Container = styled.div`
 `;
 
 export const Group = styled.div`
-    margin-bottom: 200px;
+    margin-bottom: 12rem;
     display: flex;
+    &:last-of-type {
+        margin-bottom: 0;
+    }
     
     > ${Container}:first-of-type {
-        @media (min-width: 1100px) {
-            margin-top: -150px;
+        @media (min-width: 769px) {
+            margin-top: -9.5rem;
         }
+    }
+
+    @media (max-width: 768px) {
+        margin-bottom: 1rem;
     }
 `;
 
 export const SubTitle = styled.p`
-    font-size: 12px;
+    font-size: .75rem;
     color: white;
     font-weight: bold;
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-block: 0;
     user-select: none;
     display: none;
 `;
@@ -61,6 +66,13 @@ export const Text = styled.p`
 export const Entities = styled.div`
     display: flex;
     flex-direction: row;
+    position: relative;
+    overflow-x: scroll;
+    scroll-behavior: smooth;
+
+    &::-webkit-scrollbar {
+        display: none;
+    }
 `;
 
 export const Meta = styled.div`
@@ -74,12 +86,16 @@ export const Meta = styled.div`
 export const Image = styled.img`
     border: 0;
     width: 100%;
-    min-width: 305px;
+    min-width: 19rem;
     cursor: pointer;
     height: auto;
     padding: 0;
     margin: 0;
     border-radius: 3px;
+
+    @media (max-width: 768px) {
+        min-width: 10rem;
+    }
 `;
 
 export const Item = styled.div`
@@ -91,7 +107,7 @@ export const Item = styled.div`
     transition: all 0.2s ease-in-out;
     
     &:hover {
-        transform: scale(1.3);
+        transform: scale(1.1);
         z-index: 99;
     }
     
@@ -103,18 +119,91 @@ export const Item = styled.div`
     }
     
     &:first-of-type {
-        margin-left: 56px;
+        margin-left: 3.5rem;
         
         @media (max-width: 1000px) {
-            margin-left: 30px;
+            margin-left: 1.8rem;
         }
     }
     
     &:last-of-type {
-        margin-right: 56px;
+        margin-right: 1.5rem;
         
         @media (max-width: 1000px) {
-            margin-right: 30px;
+            margin-right: 1.8rem;
         }
     }
 `;
+
+export const ArrowLeft = styled.div`
+    background-clip: content-box;
+    padding: 1.2rem 0;
+    box-sizing: border-box;
+    transition: 400ms all ease-in-out;
+    cursor: pointer;
+    width: 5rem;
+    z-index: 1000;
+    position: absolute;
+    left: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+
+    &:hover {
+        transition: 400ms all ease-in-out;
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
+
+export const Span = styled.span`
+    transition: 400ms all ease-in-out;
+
+    &:hover {
+        transition: 400ms all ease-in-out;
+        visibility: visible;
+        transform: scale(1.5);
+    }
+`;
+
+export const ArrowImage = styled.img`
+    width: 30px;
+    height: 30px;
+`;
+
+export const ArrowRight = styled.div`
+    background-clip: content-box;
+    padding: 1.2rem 0;
+    box-sizing: border-box;
+    transition: 400ms all ease-in-out;
+    cursor: pointer;
+    width: 5rem;
+    z-index: 1000;
+    position: absolute;
+    right: 0;
+    top: 0;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+
+    &:hover {
+        transition: 400ms all ease-in-out;
+        opacity: 1;
+    }
+
+    @media (max-width: 768px) {
+        display: none;
+    }
+`;
+
+export const RowSlider = styled.div`
+    position: relative;
+`
