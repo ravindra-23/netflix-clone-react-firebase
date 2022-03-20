@@ -33,7 +33,7 @@ const SignupForm = () => {
                     setName('')
                     setEmailAddress('')
                     setPassword('')
-                    navigate('/browse')
+                    navigate('/browse/home')
                 })
                 
                 
