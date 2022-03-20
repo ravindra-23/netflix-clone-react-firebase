@@ -1,17 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Home, Signin, Signup, BrowseHome } from './pages'
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom'
 import SearchResults from './components/SearchResults/SearchResults'
-
+import { UserContext } from './Context/authUser'
 const App = () => {
+  const { currentUser } = useContext(UserContext);
   return (
     <Router>
       <Routes>
         <Route path='/' element={<Home />} />
-        <Route path='/signin' element={<Signin />} />
-        <Route path='/signup' element={<Signup />} />
-        <Route path='/browse/:param' element={<BrowseHome />} />
-        <Route path='/search/:query' element={<SearchResults />} />
+        <Route path='/signin' element={currentUser ? <Navigate to='/browse/home' /> : <Signin />} />
+        <Route path='/signup' element={currentUser ? <Navigate to='/browse/home' /> : <Signup />} />
+        <Route path='/browse/:param' element={currentUser ? <BrowseHome /> : <Signin />} />
+        <Route path='/search/:query' element={currentUser ? <SearchResults /> : <Signin />} />
       </Routes>
     </Router>
   )
