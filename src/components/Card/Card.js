@@ -3,12 +3,11 @@ import { Container, Group, Title, SubTitle, Text, Meta, Entities, Item, Image, A
 import axios from '../../Axios/axios'
 import { Modal } from '../index'
 
-const Card = ({ title, id, fetchUrl }) => {
+const Card = ({ title, id, fetchUrl, isLarge, isSearch, SearchResult }) => {
   const base_url = "https://image.tmdb.org/t/p/original/";
   const [movies, setMovies] = useState([])
   const [openModal, setOpenModal] = useState(false)
   const [selectedMovie, setSelectedMovie] = useState({})
-  console.log(selectedMovie)
 
   const handleClick = (movie) => {
       setOpenModal(true);
@@ -16,15 +15,18 @@ const Card = ({ title, id, fetchUrl }) => {
   }
 
     useEffect(() => {
-        const fetchTopRated = async () => {
+        const fetchMovies = async () => {
           const { data } = await axios.get(fetchUrl)
           setMovies(data.results)
           return data
         }
-    
-        fetchTopRated();
-      }, [fetchUrl])
-      console.log(movies);
+        if (!isSearch) {
+          fetchMovies();
+        } else {
+          setMovies(SearchResult);
+        }
+      }, [fetchUrl, isSearch, isLarge, SearchResult])
+
   return (
       <Group>
         <Container>
@@ -33,11 +35,11 @@ const Card = ({ title, id, fetchUrl }) => {
               <ArrowLeft><Span onClick={() => {document.getElementById(id).scrollLeft-=(window.innerWidth-80)}}><ArrowImage src='../images/icons/left-arrow.png' /></Span></ArrowLeft>
               <Entities id={id}>
                   {movies?.map(movie => (
-                      <Item onClick={() => handleClick(movie)}>
-                          <Image src={`${base_url}${movie.backdrop_path}`} />
+                      <Item onClick={() => handleClick(movie)} key={movie?.id}>
+                          <Image src={`${base_url}${ isLarge ? movie?.poster_path : movie.backdrop_path}`} />
                           <Meta>
                               <SubTitle>{movie.title ? movie.title: movie.name}</SubTitle>
-                              <Text>{movie.overview}</Text>
+                              <Text>{movie.overview.slice(0, 350)}</Text>
                           </Meta>
                       </Item>
                   ))}

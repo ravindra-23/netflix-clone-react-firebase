@@ -18,6 +18,11 @@ const requests = {
     fetchAiringTodayTV: `/tv/airing_today?api_key=${API_KEY}&language=en-US`,
     fetchPopularTV: `/tv/popular?api_key=${API_KEY}&language=en-US`,
     fetchTopRatedTV: `/tv/top_rated?api_key=${API_KEY}&language=en-US`,
+
+    // Search
+    fetchSearchResult: `/search/multi?api_key=${API_KEY}&language=en-US&query=`,
+    fetchSearchResultMovies: `/search/movie?api_key=${API_KEY}&language=en-US&query=`,
+    fetchSearchResultSeries: `/search/tv?api_key=${API_KEY}&language=en-US&query=`
 }
 
 export default requests
