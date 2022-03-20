@@ -19,7 +19,7 @@ const SigninForm = () => {
         try {
             setError('')
             await signInWithEmailAndPassword(auth, emailAddress, password)
-            navigate('/browse')
+            navigate('/browse/home')
             
         } catch (error) {
             setError('Failed to Login')
