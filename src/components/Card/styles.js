@@ -98,7 +98,9 @@ export const Image = styled.img`
     object-fit: contain;
 
     @media (max-width: 768px) {
-        min-width: 10rem;
+        width: 10rem;
+        max-width: 10rem;
+        
     }
 `;
 

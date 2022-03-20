@@ -7,5 +7,6 @@ export const Header = styled.section`
     
     @media (max-width: 768px) {
         ${({ dontShowOnSmallViewPort }) => dontShowOnSmallViewPort && `background: none;`}
+        margin-bottom: 2rem;
     }
 `;

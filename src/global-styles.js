@@ -14,4 +14,8 @@ export const GlobalStyles = createGlobalStyle`
         font-size: 16px;
         margin: 0;
     }
+
+    html::-webkit-scrollbar {
+        display: none;
+    }
 `;
