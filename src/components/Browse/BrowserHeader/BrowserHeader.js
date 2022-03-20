@@ -1,26 +1,33 @@
-import React, { useEffect, useState } from 'react'
+import React, { useContext, useEffect, useState } from 'react'
 import { Container, Dropdown, Feature, FeatureCallOut, Group, Link, Logo, Picture, PlayButton, Profile, Text } from '../../Header/styles'
 import { Header } from './styles'
 import { SearchBar } from '../../index'
 import axios from '../../../Axios/axios'
 import requests from '../../../Axios/requests'
-import { getAuth, signOut } from 'firebase/auth'
-import app from '../../../Firebase/firebase'
+import { signOut } from 'firebase/auth'
+import { auth } from '../../../Firebase/firebase'
 import { useNavigate } from 'react-router-dom'
+import Modal from '../../Modal/Modal'
+import { UserContext } from '../../../Context/authUser'
 
 const BrowserHeader = ({ isSearch }) => {
+    const { currentUser, setCurrentUser } = useContext(UserContext)
     const navigate = useNavigate();
-    const auth = getAuth(app);
-    const user = auth.currentUser
     const [bannerMovie, setBannerMovie] = useState([])
+    const [openModal, setOpenModal] = useState(false)
 
     const handleSignout = async () => {
         try {
             await signOut(auth)
+            setCurrentUser(null)
             navigate('/signin')
         } catch (error) {
             console.error(error);
         }
+    }
+
+    const handlePlay = () => {
+        setOpenModal(true)
     }
 
 useEffect(() => {
@@ -48,7 +55,7 @@ useEffect(() => {
                 <Dropdown>
                     <Group>
                     <Picture src='../images/users/1.png' />
-                    <Link>{user.displayName}</Link>
+                    <Link>{currentUser?.displayName}</Link>
                     </Group>
                     <Group>
                     <Link onClick={handleSignout}>Sign out</Link>
@@ -60,12 +67,13 @@ useEffect(() => {
 
             {!isSearch && (
                 <Feature>
-                    <FeatureCallOut>Watch {bannerMovie.name}</FeatureCallOut>
-                    <Text>{bannerMovie.overview}</Text>
-                    <PlayButton>Play</PlayButton>
+                    <FeatureCallOut>Watch {bannerMovie?.name}</FeatureCallOut>
+                    <Text>{bannerMovie?.overview}</Text>
+                    <PlayButton onClick={handlePlay}>Play</PlayButton>
                 </Feature>
             )
             }
+            {openModal && <Modal {...bannerMovie} setOpenModal={setOpenModal} />}
         </Header>
   )
 }
