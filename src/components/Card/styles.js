@@ -5,7 +5,7 @@ export const Title = styled.p`
     color: #e5e5e5;
     font-weight: bold;
     margin-inline: 3.5rem;
-    margin-top: 0;
+    margin-block: 0;
 `;
 
 export const Container = styled.div`
@@ -68,7 +68,8 @@ export const Entities = styled.div`
     flex-direction: row;
     position: relative;
     overflow-x: scroll;
-    overflow-y: hidden;
+    padding-block: 30px;
+    -ms-overflow-style: none;
     scroll-behavior: smooth;
 
     &::-webkit-scrollbar {
@@ -87,12 +88,14 @@ export const Meta = styled.div`
 export const Image = styled.img`
     border: 0;
     width: 100%;
-    min-width: 20rem;
+    width: 18rem;
+    max-width: 18rem;
     cursor: pointer;
     height: auto;
     padding: 0;
     margin: 0;
     border-radius: 3px;
+    object-fit: contain;
 
     @media (max-width: 768px) {
         min-width: 10rem;
@@ -108,7 +111,7 @@ export const Item = styled.div`
     transition: all 0.2s ease-in-out;
     
     &:hover {
-        transform: scale(1.3);
+        transform: scale(1.1);
         z-index: 99;
     }
     
