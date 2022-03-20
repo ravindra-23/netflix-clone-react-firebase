@@ -38,6 +38,11 @@ export const ModalEl = styled.div`
         display: none;
         visibility: hidden;
     }
+
+    @media (max-width: 768px) {
+        max-width: 300px;
+        max-height: 700px;
+    }
 `;
 
 export const Close = styled.span`
