@@ -4,13 +4,24 @@ import { Header } from './styles'
 import { SearchBar } from '../../index'
 import axios from '../../../Axios/axios'
 import requests from '../../../Axios/requests'
-import { getAuth } from 'firebase/auth'
+import { getAuth, signOut } from 'firebase/auth'
 import app from '../../../Firebase/firebase'
+import { useNavigate } from 'react-router-dom'
 
-const BrowserHeader = ({ handleMovies, handleTv, handleHome }) => {
+const BrowserHeader = ({ isSearch }) => {
+    const navigate = useNavigate();
     const auth = getAuth(app);
     const user = auth.currentUser
     const [bannerMovie, setBannerMovie] = useState([])
+
+    const handleSignout = async () => {
+        try {
+            await signOut(auth)
+            navigate('/signin')
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
 useEffect(() => {
     const fetchData = async () => {
@@ -21,13 +32,13 @@ useEffect(() => {
     fetchData()
     }, [])
   return (
-        <Header src={bannerMovie.backdrop_path} dontShowOnSmallViewPort>
+        <Header src={!isSearch && bannerMovie?.backdrop_path} dontShowOnSmallViewPort>
             <Container>
             <Group>
                 <Logo to='/home' src='../images/misc/logo.svg' alt='Netflix' />
-                <Link onClick={handleHome}>Home</Link>
-                <Link onClick={handleMovies}>Films</Link>
-                <Link onClick={handleTv}>Series</Link>
+                <Link onClick={() => navigate('/browse/home')}>Home</Link>
+                <Link onClick={() => navigate('/browse/movies')}>Films</Link>
+                <Link onClick={() => navigate('/browse/tv')}>Series</Link>
             </Group>
 
             <Group>
@@ -40,18 +51,21 @@ useEffect(() => {
                     <Link>{user.displayName}</Link>
                     </Group>
                     <Group>
-                    <Link>Sign out</Link>
+                    <Link onClick={handleSignout}>Sign out</Link>
                     </Group>
                 </Dropdown>
                 </Profile>
             </Group>
             </Container>
 
-            <Feature>
-            <FeatureCallOut>Watch {bannerMovie.name}</FeatureCallOut>
-            <Text>{bannerMovie.overview}</Text>
-            <PlayButton>Play</PlayButton>
-            </Feature>
+            {!isSearch && (
+                <Feature>
+                    <FeatureCallOut>Watch {bannerMovie.name}</FeatureCallOut>
+                    <Text>{bannerMovie.overview}</Text>
+                    <PlayButton>Play</PlayButton>
+                </Feature>
+            )
+            }
         </Header>
   )
 }
