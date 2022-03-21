@@ -108,26 +108,32 @@ const SearchResults = () => {
                     <>
                         <Card 
                             isSearch 
+                            id='SR1'
                             SearchResult={searchResultData?.slice(0, limit)} 
                         />
                         <Card
                             isSearch
+                            id='SR2'
                             SearchResult={searchResultData?.slice(limit, 2 * limit)}
                         />
                         <Card
                             isSearch
+                            id='SR3'
                             SearchResult={searchResultData?.slice(2 * limit, 3 * limit)}
                         />
                         <Card
                             isSearch
+                            id='SR4'
                             SearchResult={searchResultData?.slice(3 * limit, 4 * limit)}
                         />
                         <Card
                             isSearch
+                            id='SR5'
                             SearchResult={searchResultData?.slice(4 * limit, 5 * limit)}
                         />
                         <Card 
                             isSearch 
+                            id='SR6'
                             SearchResult={searchResultData?.slice(5 * limit)} 
                         />
                     </>
