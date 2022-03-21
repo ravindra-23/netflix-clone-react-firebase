@@ -78,6 +78,7 @@ export const Link = styled.p`
 export const Picture = styled.button`
     background: url(${({ src }) => src});
     background-size: contain;
+    background-repeat: no-repeat;
     border: 0;
     width: 2rem;
     height: 2rem;
@@ -133,6 +134,7 @@ export const Profile = styled.div`
     
     &:hover > ${Dropdown} {
         display: flex;
+        justify-content: center;
         flex-direction: column;
     }
 `;
