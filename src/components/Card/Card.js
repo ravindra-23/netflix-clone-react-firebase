@@ -17,7 +17,9 @@ const Card = ({ title, id, fetchUrl, isLarge, isSearch, SearchResult }) => {
     useEffect(() => {
         const fetchMovies = async () => {
           const { data } = await axios.get(fetchUrl)
-          setMovies(data.results)
+          const filteredData = data.results.filter(item => item.backdrop_path)
+          console.log(data)
+          setMovies(filteredData)
           return data
         }
         if (!isSearch) {
