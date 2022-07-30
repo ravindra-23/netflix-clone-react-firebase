@@ -26,7 +26,7 @@ const Modal = ({ backdrop_path, title, overview, name, release_date, first_air_d
             })
             .catch(error => console.log(error))
         }
-    }, [name, title, trailerUrl])
+    }, [])
   return (
     <Container>
         <Wrapper>
